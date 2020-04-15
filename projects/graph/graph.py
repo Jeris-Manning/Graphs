@@ -98,18 +98,19 @@ class Graph:
         This should be done using recursion.
         """
         if visited is None:
-            visited = [starting_vertex]
-        print(starting_vertex)
+            visited = [starting_vertex] # This is where we start our journey, so it is visited by default
+        print(starting_vertex) # Always shout where you're from at the start of a fight
 
         hayloft = self.get_neighbors(starting_vertex)
+        # Make note of who all your neighbors are
         for bail in hayloft:
-            # print(bail, visited, "BAIL", "VISITED")
+            # For each neighboring vertex
             if bail not in visited:
-                # print(bail, "BAIL")
-                # print(visited, "VISITED")
+                # if we haven't been there yet, we go pay a visit
                 visited.append(bail)
-                # print(visited, "VISITED")
+                # add it to our list of places we've been
                 self.dft_recursive(bail, visited)
+                # and lets go meet the new neighbors, never forgetting where we've been
 
 
     def bfs(self, starting_vertex, destination_vertex):
@@ -170,15 +171,26 @@ class Graph:
                     ss.push(new_path)
 
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing a path from
-        starting_vertex to destination_vertex in
-        depth-first order.
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited = None, path = None):
 
-        This should be done using recursion.
-        """
-        pass  # TODO
+        if visited is None:
+            visited = set()
+
+        if path is None:
+            path = []
+
+
+        visited.add(starting_vertex)
+        new_path = path + [starting_vertex]
+
+        if starting_vertex == destination_vertex:
+            return new_path
+
+        for neighbor in self.vertices[starting_vertex]:
+            if neighbor not in visited:
+                neighbor_path = self.dfs_recursive(neighbor, destination_vertex, visited, new_path)
+                if neighbor_path:
+                    return neighbor_path
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph

@@ -70,25 +70,32 @@ class Graph:
         beginning from starting_vertex.
         """
         # Create a q and enqueue starting vertex
+        paths=[]
         hay = Stack()
         hay.push([starting_vertex])
         # Create a set of traversed vertices
         visited = set()
         # While stack is not empty:
         while hay.size() > 0:
+
             # pop the first vertex
             path = hay.pop()
             # if not visited
             if path[-1] not in visited:
                 # DO THE THING!!!!!!!
-                print(path[-1])
+                # print(path[-1])
                 # mark as visited
                 visited.add(path[-1])
+                paths.append(path)
                 # enqueue all neightbors
                 for next_vert in self.get_neighbors(path[-1]):
                     new_path = list(path)
                     new_path.append(next_vert)
                     hay.push(new_path)
+        print(paths)
+        return paths
+
+
 
     def dft_recursive(self, starting_vertex, visited = None):
         """
